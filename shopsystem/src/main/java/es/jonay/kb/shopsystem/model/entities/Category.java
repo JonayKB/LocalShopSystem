@@ -14,7 +14,7 @@ public class Category {
     private static final long serialVersionUID = -3946522083L;
 
     @Id
-    private Long categoryId;
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "category")
     private Set<Item> items;
@@ -22,21 +22,21 @@ public class Category {
     public Category() {
     }
 
-    public Category(Long categoryId, String name, Set<Item> items) {
-        this.categoryId = categoryId;
+    public Category(Long id, String name, Set<Item> items) {
+        this.id = id;
         this.name = name;
         this.items = items;
     }
-    public Category(Long categoryId) {
-        this.categoryId = categoryId;
+    public Category(Long id) {
+        this.id = id;
     }
 
-    public Long getCategoryId() {
-        return this.categoryId;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -64,18 +64,18 @@ public class Category {
             return false;
         }
         Category category = (Category) o;
-        return Objects.equals(categoryId, category.categoryId) ;
+        return Objects.equals(id, category.id) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(categoryId);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " categoryId='" + getCategoryId() + "'" +
+            " categoryId='" + getId() + "'" +
             ", name='" + getName() + "'" +
             ", items='" + getItems() + "'" +
             "}";
