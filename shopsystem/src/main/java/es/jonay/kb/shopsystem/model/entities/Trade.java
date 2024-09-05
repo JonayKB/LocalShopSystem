@@ -47,6 +47,14 @@ public class Trade {
 
 
 
+    public Date getDate() {
+        return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -69,6 +77,7 @@ public class Trade {
         return "{" +
             " id='" + getId() + "'" +
             ", items='" + getItems() + "'" +
+            ", items='" + getDate() + "'" +
             "}";
     }
     

@@ -6,16 +6,17 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import es.jonay.kb.shopsystem.model.entities.Category;
 import es.jonay.kb.shopsystem.model.entities.Item;
 
 @Repository
-public interface IItemRepository extends JpaRepository<Item,Long> {
-    List<Item> findAll();
+public interface ICategoryRepository extends JpaRepository<Category,Long> {
+    List<Category> findAll();
 
     void deleteById(Long id);
 
-    Optional<Item> findById(Long id);
+    Optional<Category> findById(Long id);
 
-    Item save(Item entity);
+    Category save(Category entity);
 }
 
