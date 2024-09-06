@@ -19,7 +19,7 @@ public class Item {
     @ManyToOne
     private Category category;
 
-    @ManyToMany(mappedBy = "items")
+    @ManyToMany()
     private List<Trade> trade;
     public Item() {
     }

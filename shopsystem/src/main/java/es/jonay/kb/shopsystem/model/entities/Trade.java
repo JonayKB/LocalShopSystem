@@ -3,6 +3,7 @@ package es.jonay.kb.shopsystem.model.entities;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany()
+    @ManyToMany(mappedBy = "trade", cascade = CascadeType.PERSIST)
     private List<Item> items;
 
 

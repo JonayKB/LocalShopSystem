@@ -50,7 +50,6 @@ public class TradeController {
 
     public TradeDto saveList(ArrayList<ItemDto> items){
         Trade trade = TradeMapper.INSTANCE.toTrade(new TradeDto(items, new Date())) ;
-        trade.setDate(new Date());
         return TradeMapper.INSTANCE.toTradeDto(tradeRepository.save(trade));
     }
     
