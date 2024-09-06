@@ -12,9 +12,14 @@ public class TradeDto {
     public TradeDto() {
     }
 
-    public TradeDto(Long id, List<ItemDto> items) {
+    public TradeDto(Long id, List<ItemDto> items, Date date) {
         this.id = id;
         this.items = items;
+        this.date = date;
+    }
+    public TradeDto(List<ItemDto> items,Date date) {
+        this.items = items;
+        this.date = date;
     }
 
     public Long getId() {

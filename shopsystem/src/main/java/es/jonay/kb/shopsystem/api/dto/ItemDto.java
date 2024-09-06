@@ -23,6 +23,7 @@ public class ItemDto {
         this.price = price;
         this.categoryId = categoryId;
     }
+    
 
     public Long getId() {
         return this.id;

@@ -12,6 +12,7 @@ import es.jonay.kb.shopsystem.model.entities.Trade;
 public interface TradeMapper {
     TradeMapper INSTANCE = Mappers.getMapper(TradeMapper.class);
     public TradeDto toTradeDto(Trade trade);
-
+    
+    @Mapping(target = "id", ignore = true)
     public Trade toTrade(TradeDto tradeDto);
 }

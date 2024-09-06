@@ -1,10 +1,10 @@
 package es.jonay.kb.shopsystem.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,44 +15,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.jonay.kb.shopsystem.api.dto.CategoryDto;
 import es.jonay.kb.shopsystem.api.dto.ItemDto;
-import es.jonay.kb.shopsystem.controller.CategoryController;
+import es.jonay.kb.shopsystem.api.dto.TradeDto;
 import es.jonay.kb.shopsystem.controller.ItemController;
+import es.jonay.kb.shopsystem.controller.TradeController;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping("category")
+@RequestMapping("trade")
+public class TradeService {
+    TradeController tradeController;
 
-public class CategoryService {
-    CategoryController categoryController;
-
-    public CategoryController getCategoryController() {
-        return this.categoryController;
+    public TradeController getTradeController() {
+        return this.tradeController;
     }
 
     @Autowired
-    public void setCategoryController(CategoryController categoryController) {
-        this.categoryController = categoryController;
+    public void setTradeController(TradeController tradeController) {
+        this.tradeController = tradeController;
     }
 
     @GetMapping("/")
-    public List<CategoryDto> getAll() {
-        return categoryController.findAll();
+    public List<TradeDto> getAll() {
+        return tradeController.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<CategoryDto> getById(@PathVariable(name = "id") final Long id) {
-        return categoryController.findById(id);
+    public Optional<TradeDto> getById(@PathVariable(name = "id") final Long id) {
+        return tradeController.findById(id);
     }
 
     @PostMapping("/")
-    public CategoryDto save(@RequestBody CategoryDto entity) {
-        return categoryController.save(entity);
+    public TradeDto save(@RequestBody TradeDto entity) {
+        return tradeController.save(entity);
+    }
+
+    @PostMapping("/newTrade")
+    public TradeDto saveList(@RequestBody ArrayList<ItemDto> items) {
+        return tradeController.saveList(items);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable(name = "id") final Long id) {
-        categoryController.deleteById(id);
+        tradeController.deleteById(id);
     }
 }

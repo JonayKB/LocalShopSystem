@@ -1,6 +1,7 @@
 package es.jonay.kb.shopsystem.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +44,14 @@ public class TradeController {
     }
 
     public TradeDto save(TradeDto tradeDto){
-        Trade item = TradeMapper.INSTANCE.toTrade(tradeDto);
-        return TradeMapper.INSTANCE.toTradeDto(tradeRepository.save(item));
+        Trade trade = TradeMapper.INSTANCE.toTrade(tradeDto);
+        return TradeMapper.INSTANCE.toTradeDto(tradeRepository.save(trade));
+    }
+
+    public TradeDto saveList(ArrayList<ItemDto> items){
+        Trade trade = TradeMapper.INSTANCE.toTrade(new TradeDto(items, new Date())) ;
+        trade.setDate(new Date());
+        return TradeMapper.INSTANCE.toTradeDto(tradeRepository.save(trade));
     }
     
     public void deleteById(Long id){
