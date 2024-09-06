@@ -17,6 +17,8 @@
 	<name>shopsysten</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 	</properties>
