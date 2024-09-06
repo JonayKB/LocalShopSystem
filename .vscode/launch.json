@@ -2,11 +2,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-ShopsystemApplication<shopsystem>",
+            "name": "Spring Boot-ShopsystemApplication<shopsysten>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "es.jonay.kb.shopsystem.ShopsystemApplication",
-            "projectName": "shopsystem",
+            "projectName": "shopsysten",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

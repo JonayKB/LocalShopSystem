@@ -15,6 +15,7 @@ async function fetchGetUrl(url) {
       
       return json;
   } catch (error) {
+    console.log(error.message)
       alert("No se ha podido realizar la operación"); 
   }
 }
@@ -27,8 +28,6 @@ document.addEventListener('keypress', async e => {
   if (e.keyCode === 13) {
     if (code.length > 10) {
       let url = "http://localhost:25565/kiosco/item/" + code;
-      
- 
       const jsonData = await fetchGetUrl(url);
       actualItems.push(jsonData);
       totalPrice += jsonData.price;
@@ -67,7 +66,6 @@ function displayItems(actualItems, zone) {
     return actualItems.find(item => item.id === id);
   });
 
-console.log(totalPrice)
 
   uniqueItems.forEach(item => {
       objects += `<tr>
