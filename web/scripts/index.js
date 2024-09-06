@@ -8,26 +8,28 @@ let categoriesDictionary = new Map();
 async function fetchGetUrl(url) {
   try {
       const response = await fetch(url);
+      console.log(response)
       if (!response.ok) {
-          throw new Error('Este objeto no se encuentra registrado');
+        alert("No se ha podido realizar la operación"); 
       }
       const json = await response.json(); 
-      
+      if(json==null){
+        throw new Error('Este objeto no se encuentra registrado');
+      }
       return json;
   } catch (error) {
-    console.log(error.message)
-      alert("No se ha podido realizar la operación"); 
+      alert(error.message); 
   }
 }
 
-fetchGetUrl('http://localhost:25565/kiosco/category/').then(  categories => {
+fetchGetUrl('http://zombiesurvive.ddns.net:25565/kiosco/category/').then(  categories => {
   categories.forEach(element => {
     categoriesDictionary.set(element.id, element.name); 
   })});
 document.addEventListener('keypress', async e => {
   if (e.keyCode === 13) {
     if (code.length > 10) {
-      let url = "http://localhost:25565/kiosco/item/" + code;
+      let url = "http://zombiesurvive.ddns.net:25565/kiosco/item/" + code;
       const jsonData = await fetchGetUrl(url);
       actualItems.push(jsonData);
       totalPrice += jsonData.price;

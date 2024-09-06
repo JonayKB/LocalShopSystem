@@ -1,6 +1,7 @@
 package es.jonay.kb.shopsystem.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,8 @@ public class ItemService {
     }
 
     @GetMapping("/{id}")
-    public ItemDto getById(@PathVariable(name = "id") final Long id) {
-
-        return iItemController.findById(id).orElse(null);
+    public Optional<ItemDto> getById(@PathVariable(name = "id") final Long id) {
+        return iItemController.findById(id);
     }
 
     @PostMapping("/")
