@@ -22,14 +22,14 @@ async function fetchGetUrl(url) {
   }
 }
 
-fetchGetUrl('http://zombiesurvive.ddns.net:25565/kiosco/category/').then(  categories => {
+fetchGetUrl('http://192.168.0.26:25565/kiosco/category/').then(  categories => {
   categories.forEach(element => {
     categoriesDictionary.set(element.id, element.name); 
   })});
 document.addEventListener('keypress', async e => {
   if (e.keyCode === 13) {
     if (code.length > 10) {
-      let url = "http://zombiesurvive.ddns.net:25565/kiosco/item/" + code;
+      let url = "http://192.168.0.26:25565/kiosco/item/" + code;
       const jsonData = await fetchGetUrl(url);
       actualItems.push(jsonData);
       totalPrice += jsonData.price;
