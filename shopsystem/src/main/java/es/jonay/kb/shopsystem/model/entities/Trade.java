@@ -19,7 +19,7 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany(mappedBy = "trade", cascade = CascadeType.PERSIST)
+    @ManyToMany()
     private List<Item> items;
 
 

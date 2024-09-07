@@ -10,18 +10,31 @@ import org.springframework.stereotype.Controller;
 import es.jonay.kb.shopsystem.api.dto.ItemDto;
 import es.jonay.kb.shopsystem.api.mappers.ItemMapper;
 import es.jonay.kb.shopsystem.model.entities.Item;
+import es.jonay.kb.shopsystem.model.repository.ICategoryRepository;
 import es.jonay.kb.shopsystem.model.repository.IItemRepository;
 
 @Controller
 public class ItemController {
     private IItemRepository itemRepository;
+    private ICategoryRepository categoryRepository;
 
     public IItemRepository getIItemRepository() {
         return this.itemRepository;
     }
+
+
     @Autowired
     public void setIItemRepository(IItemRepository itemRepository) {
         this.itemRepository = itemRepository;
+    }
+
+    @Autowired
+    public void setIICategoryRepository(ICategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+    public ICategoryRepository getICategoryRepository() {
+        return this.categoryRepository;
     }
 
     public List<ItemDto> findAll(){
@@ -40,6 +53,7 @@ public class ItemController {
 
     public ItemDto save(ItemDto itemDto){
         Item item = ItemMapper.INSTANCE.toItem(itemDto);
+        item.setCategory(categoryRepository.findById(itemDto.getCategoryId()).orElse(null));
         return ItemMapper.INSTANCE.toItemDto(itemRepository.save(item));
     }
     

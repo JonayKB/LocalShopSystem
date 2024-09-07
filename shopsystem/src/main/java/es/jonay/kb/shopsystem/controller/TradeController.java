@@ -14,13 +14,23 @@ import es.jonay.kb.shopsystem.api.mappers.ItemMapper;
 import es.jonay.kb.shopsystem.api.mappers.TradeMapper;
 import es.jonay.kb.shopsystem.model.entities.Item;
 import es.jonay.kb.shopsystem.model.entities.Trade;
+import es.jonay.kb.shopsystem.model.repository.ICategoryRepository;
 import es.jonay.kb.shopsystem.model.repository.IItemRepository;
 import es.jonay.kb.shopsystem.model.repository.ITradeRepository;
 
 @Controller
 public class TradeController {
     private ITradeRepository tradeRepository;
+    private ICategoryRepository categoryRepository;
 
+    @Autowired
+    public void setIICategoryRepository(ICategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+    public ICategoryRepository getICategoryRepository() {
+        return this.categoryRepository;
+    }
     public ITradeRepository getITradeRepository() {
         return this.tradeRepository;
     }
@@ -48,8 +58,17 @@ public class TradeController {
         return TradeMapper.INSTANCE.toTradeDto(tradeRepository.save(trade));
     }
 
-    public TradeDto saveList(ArrayList<ItemDto> items){
-        Trade trade = TradeMapper.INSTANCE.toTrade(new TradeDto(items, new Date())) ;
+    public TradeDto saveList(ArrayList<ItemDto> itemsDto){
+        
+        List<Item> itemList = new ArrayList<Item>();
+        for(ItemDto itemDto : itemsDto){
+            Item item = ItemMapper.INSTANCE.toItem(itemDto);
+            item.setCategory(categoryRepository.findById(itemDto.getCategoryId()).get());
+            itemList.add(item);
+        }
+        Trade trade = new Trade() ;
+        trade.setDate(new Date());
+        trade.setItems(itemList);
         return TradeMapper.INSTANCE.toTradeDto(tradeRepository.save(trade));
     }
     
