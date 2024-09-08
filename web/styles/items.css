@@ -1,0 +1,54 @@
+/* General styles for the body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex; /* This makes it easier to align #barcodeZone and #selector */
+    height: 100vh; /* Full height view */
+    background-color: rgba(34, 34, 34, 1); /* Dark background */
+    color: rgba(200, 200, 200, 1); /* Light text color */
+    padding-top: 50px; /* Adjusted padding to avoid content being hidden under the nav */
+    box-sizing: border-box; /* Ensures padding is included in width/height calculations */
+}
+
+/* Styling for the navigation bar */
+#mainNav {
+    position: fixed; /* Fixes it to the top of the viewport */
+    top: 0;
+    left: 0;
+    width: 100%; /* Takes up the full width */
+    background-color: rgba(0, 0, 0, 1); /* Black background */
+    padding: 10px 0; /* Padding for some space around the content */
+    z-index: 1000; /* Ensures the nav bar is above other content */
+}
+
+/* Styling for the navigation list */
+.nav-list {
+    list-style: none; /* Removes list bullets */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Aligns items horizontally */
+    justify-content: space-between; /* Distributes items evenly across the nav */
+    align-items: center; /* Centers items vertically */
+    padding: 0 20px; /* Adds space on the sides */
+}
+
+/* Styling for each navigation item */
+.nav-item {
+    margin: 0; /* Removes margin between items */
+}
+
+/* Styling for the navigation links */
+.nav-link {
+    color: rgba(255, 255, 255, 1); /* White text color */
+    text-decoration: none; /* Removes underline from links */
+    font-size: 1rem;
+    padding: 5px 15px; /* Adds space around the text of the link */
+    border-radius: 5px; /* Slightly rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover {
+    background-color: rgba(50, 50, 50, 1); /* Lighter gray background on hover */
+    color: rgba(255, 255, 255, 1); /* Ensures text color remains white */
+}

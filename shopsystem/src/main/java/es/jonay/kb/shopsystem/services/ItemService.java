@@ -42,6 +42,11 @@ public class ItemService {
         return iItemController.findById(id);
     }
 
+    @GetMapping("/byCategory/{categoryId}")
+    public List<ItemDto> getByCategoryId(@PathVariable(name = "categoryId") final Long categoryId) {
+        return iItemController.findByCategoryId(categoryId);
+    }
+
     @PostMapping("/")
     public ItemDto save(@RequestBody ItemDto entity) {
         return iItemController.save(entity);

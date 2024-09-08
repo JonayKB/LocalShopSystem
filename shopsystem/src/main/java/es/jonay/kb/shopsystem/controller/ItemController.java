@@ -51,6 +51,14 @@ public class ItemController {
         return item.map(ItemMapper.INSTANCE::toItemDto);
     }
 
+    public List<ItemDto> findByCategoryId(Long categoryId){
+        List<ItemDto> itemDtos = new ArrayList<>();
+        for (Item item : itemRepository.findByCategoryId(categoryId)) {
+            itemDtos.add(ItemMapper.INSTANCE.toItemDto(item));
+        }
+        return itemDtos;
+    }
+
     public ItemDto save(ItemDto itemDto){
         Item item = ItemMapper.INSTANCE.toItem(itemDto);
         item.setCategory(categoryRepository.findById(itemDto.getCategoryId()).orElse(null));

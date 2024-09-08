@@ -1,0 +1,181 @@
+/* General styles for the body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex; /* This makes it easier to align #barcodeZone and #selector */
+    height: 100vh; /* Full height view */
+    background-color: rgba(34, 34, 34, 1); /* Dark background */
+    color: rgba(200, 200, 200, 1); /* Light text color */
+    padding-top: 50px; /* Adjusted padding to avoid content being hidden under the nav */
+    box-sizing: border-box; /* Ensures padding is included in width/height calculations */
+}
+
+/* Styling for the navigation bar */
+#mainNav {
+    position: fixed; /* Fixes it to the top of the viewport */
+    top: 0;
+    left: 0;
+    width: 100%; /* Takes up the full width */
+    background-color: rgba(0, 0, 0, 1); /* Black background */
+    padding: 10px 0; /* Padding for some space around the content */
+    z-index: 1000; /* Ensures the nav bar is above other content */
+}
+
+/* Styling for the navigation list */
+.nav-list {
+    list-style: none; /* Removes list bullets */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Aligns items horizontally */
+    justify-content: space-between; /* Distributes items evenly across the nav */
+    align-items: center; /* Centers items vertically */
+    padding: 0 20px; /* Adds space on the sides */
+}
+
+/* Styling for each navigation item */
+.nav-item {
+    margin: 0; /* Removes margin between items */
+}
+
+/* Styling for the navigation links */
+.nav-link {
+    color: rgba(255, 255, 255, 1); /* White text color */
+    text-decoration: none; /* Removes underline from links */
+    font-size: 1rem;
+    padding: 5px 15px; /* Adds space around the text of the link */
+    border-radius: 5px; /* Slightly rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover {
+    background-color: rgba(50, 50, 50, 1); /* Lighter gray background on hover */
+    color: rgba(255, 255, 255, 1); /* Ensures text color remains white */
+}
+
+/* Styling the barcodeZone */
+#barcodeZone {
+    width: 25%; /* Set width for barcode zone */
+    background-color: rgba(40, 40, 40, 1); /* Dark background for clarity */
+    border-left: 2px solid rgba(0, 0, 0, 1); /* Slight border to separate it */
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Soft shadow for separation */
+    overflow-y: auto; /* Make it scrollable if content overflows */
+    margin-top: 0px; /* Adjust margin to ensure it starts below the nav */
+}
+
+#barcodeZone table {
+    width: 100%; /* Ensure the table uses full width */
+    border-collapse: collapse; /* Remove space between cells */
+}
+
+#barcodeZone th, #barcodeZone td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(60, 60, 60, 1); /* Softer, dark border */
+    text-align: left;
+}
+
+#barcodeZone th {
+    background-color: rgba(25, 25, 25, 1); /* Slightly lighter dark background for headers */
+    color: rgba(220, 220, 220, 1); /* Light grey text for contrast */
+}
+
+#barcodeZone tr:nth-child(even) {
+    background-color: rgba(45, 45, 45, 1); /* Medium dark grey for alternate rows */
+}
+
+#barcodeZone tr:nth-child(odd) {
+    background-color: rgba(34, 34, 34, 1); /* Dark grey for odd rows to provide subtle contrast */
+}
+
+/* Styling the selector zone */
+#selector {
+    width: 75%; /* Remaining width for the selector zone */
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allows the items to adjust and wrap when needed */
+    gap: 15px; /* Space between items */
+    overflow-y: auto; /* Scrollable if content overflows */
+}
+
+/* Shared styles for category-item and object-item */
+.category-item, .object-item {
+    flex: 1 1 calc(33.333% - 30px); /* Three items per row, adjust size with space */
+    background-color: rgba(51, 51, 51, 1);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease; /* Animation on hover */
+}
+
+.category-item img, .object-item img {
+    width: 100%;
+    max-width: 150px; /* Ensure the images have a consistent size */
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.category-item h3, .object-item h3 {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 1);
+}
+
+.category-item:hover, .object-item:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+}
+
+/* Styling the return button */
+#returnButton {
+    width: 100%;
+    padding: 10px 0;
+    background-color: rgba(2, 38, 77, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#returnButton:hover {
+    background-color: rgba(0, 86, 179, 1);
+}
+
+/* Styling the send button */
+#sendButton {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    padding: 15px 30px;
+    background-color: rgba(40, 167, 69, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#sendButton:hover {
+    background-color: rgba(33, 136, 56, 1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+#sendButton:active {
+    transform: scale(0.95); /* Slightly shrink the button when pressed */
+}
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(102, 102, 102, 1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(153, 153, 153, 1);
+}

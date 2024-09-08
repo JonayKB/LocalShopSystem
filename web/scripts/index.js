@@ -2,14 +2,19 @@ let totalPrice = 0;
 let code = "";
 let reading = false;
 const barcodeZone = document.getElementById('barcodeZone');
+const selectorZone = document.getElementById('selector');
 let actualItems = [];
 let categoriesDictionary = new Map();
 const sendButton = document.getElementById('sendButton');
+let returnButton = document.getElementById('returnButton');
 
+function playSuccessSound() {
+  const audio = new Audio('../web/sounds/success_sound.mp3'); 
+  audio.play();
+}
 async function fetchGetUrl(url) {
   try {
     const response = await fetch(url);
-    console.log(response);
     if (!response.ok) {
       alert("No se ha podido realizar la operación"); 
     }
@@ -27,7 +32,63 @@ fetchGetUrl('http://localhost:25565/kiosco/category/').then(categories => {
   categories.forEach(element => {
     categoriesDictionary.set(element.id, element.name); 
   });
+  selectorInitiator();
 });
+
+function selectorInitiator(){
+  let content = '';
+  categoriesDictionary.forEach((value, key) => {
+    content += `<div id="category${key}" class="category-item" data-id="${key}">
+                  <img src="../web/images/categories/${key}.jpg" data-id="${key}"  />
+                 <h3 data-id="${key}" >${value.toUpperCase()}</h3>
+                </div>`;
+  });
+  selectorZone.innerHTML = content;
+
+  document.querySelectorAll('.category-item').forEach(img => {
+    img.addEventListener('click', event => {
+      const categoryId = event.target.getAttribute('data-id');
+      loadCategoryContent(categoryId); 
+    });
+  });
+}
+function loadCategoryContent(categoryId) {
+  fetchGetUrl(`http://localhost:25565/kiosco/item/byCategory/${categoryId}`)
+    .then(objects => {
+      let content = '';
+      objects.forEach(item => {
+        content += `<div class="object-item" data-id="${item.id}">
+          <img src="../web/images/items/${item.id}.jpg" alt="${item.name}" data-id="${item.id}" />
+          <h3 data-id="${item.id}">${item.name}</h3>
+        </div>`;
+      });
+      content += `<button id="returnButton">Volver</button>`;
+      
+      // Actualizar el contenido del selector con los ítems de la categoría seleccionada
+      selectorZone.innerHTML = content;
+
+      // Asignar el evento para el botón de "Volver"
+      const returnButton = document.getElementById('returnButton');
+      if (returnButton) {
+        returnButton.onclick = selectorInitiator;
+      }
+
+      // Aquí es donde se debe asignar el evento `click` a las imágenes
+      document.querySelectorAll('.object-item').forEach(img => {
+        img.addEventListener('click', event => {
+          const itemId = event.target.getAttribute('data-id');
+          fetchGetUrl(`http://localhost:25565/kiosco/item/${itemId}`)
+            .then(item => {
+              actualItems.push(item); // Añadir el ítem a la lista actual
+              totalPrice += item.price; // Sumar el precio al total
+              displayItems(actualItems, barcodeZone); // Actualizar la visualización de la lista de ítems
+            });
+        });
+      });
+    });
+}
+
+
 
 document.addEventListener('keypress', async e => {
   if (e.keyCode === 13) {
@@ -76,9 +137,9 @@ function displayItems(actualItems, zone) {
       <td>${item.price}</td>
       <td>${categoriesDictionary.get(item.categoryId)}</td>
       <td>
-        <button onclick="deleteItem(${item.id})">-</button> 
+        <button onclick="deleteItem(${item.id})" class= "quantity-button">-</button> 
         ${frequencies[item.id]} 
-        <button onclick="addItem(${item.id})">+</button>
+        <button onclick="addItem(${item.id})" class= "quantity-button">+</button>
       </td>
       </tr>`;
   });
@@ -128,7 +189,6 @@ function sendTrade() {
     alert("No hay productos añadidos");
     return;
   }
-  console.log(JSON.stringify(actualItems));
   fetch('http://localhost:25565/kiosco/trade/newTrade', {
     method: 'POST',
     headers: {
@@ -144,10 +204,10 @@ function sendTrade() {
       return response.json();
     })
     .then(data => {
-      console.log('Success:', data);
       actualItems = [];
       totalPrice = 0;
       displayItems(actualItems, barcodeZone);
+      playSuccessSound();
     })
     .catch((error) => {
       console.error('Error:', error);
