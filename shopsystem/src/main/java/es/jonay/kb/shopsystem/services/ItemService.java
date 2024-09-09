@@ -52,10 +52,6 @@ public class ItemService {
         return iItemController.save(entity);
     }
 
-    @PostMapping("/int")
-    public Integer pruebaInt(@RequestBody Integer entity) {
-        return entity;
-    }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable(name = "id") final Long id) {

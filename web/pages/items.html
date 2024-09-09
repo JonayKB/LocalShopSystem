@@ -15,8 +15,25 @@
           <li class="nav-item"><a href="#" class="nav-link">Devoluciones</a></li>
         </ul>
       </nav>
-    <div id="items-container"></div>
+      <div id="items-container" class="centered-table-container"></div>
+    
+      <!-- Contenedor oculto -->
+      <div id="overlay"></div> 
+      <div id="createItem-container">
+        <button id="closeButton" onclick="hideCreateItem()">✖</button>
+        <h3>Identificador</h3>
+          <input type="number" name="idContainer" id="itemId">
+        <h3>Nombre</h3>
+          <input type="text" name="nameContainer" id="itemName">
+        <h3>Precio</h3>
+          <input type="number" name="precioContainer" id="itemPrice">
+          <h3>Categoría</h3>
+          <select name="categoryContainer" id="itemCategory">
+          </select>
+          <button onclick="createItem()", type="submit">Aceptar</button>
+      </div>
+      <button type="submit" id="createItem" onclick="showCreateItem()">Crear Objeto</button>
 
-    <script src="../scripts/items.js"></script>
+    <script src="../scripts/items.js" ></script>
 </body>
 </html>

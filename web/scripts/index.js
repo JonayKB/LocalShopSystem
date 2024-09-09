@@ -7,9 +7,9 @@ let actualItems = [];
 let categoriesDictionary = new Map();
 const sendButton = document.getElementById('sendButton');
 let returnButton = document.getElementById('returnButton');
+const audio = new Audio('../sounds/success_sound.mp3');
 
 function playSuccessSound() {
-  const audio = new Audio('../sounds/success_sound.mp3'); 
   audio.play();
 }
 async function fetchGetUrl(url) {
