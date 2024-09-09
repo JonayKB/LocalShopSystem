@@ -54,8 +54,7 @@ El proyecto sigue una arquitectura de **Modelo-Servicio-Controlador (MVC)**:
      └── kb
       └── shopsystem
        ├── api
-        │ ├── config
-         # Configuración de la API
+        │ ├── config # Configuración de la API
         │ ├── dto # Objetos de transferencia de datos
         │ └── mappers # Mapeadores de datos
         ├── controller # Controladores de la aplicación
