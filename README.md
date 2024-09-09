@@ -1,6 +1,9 @@
 # LocalShopSystem
+<div text-align="center">
 
 ![LocalShopSystem Logo](/web/images/icon.ico)
+
+</div>
 
 **LocalShopSystem** es una aplicación de gestión de compras para mercados, diseñada para funcionar como un sistema de cajas registradoras. Este proyecto ha sido desarrollado en **Java** utilizando un conjunto de tecnologías modernas como **Hibernate**, **Spring Boot**, **Spring Data** y **Tomcat** para el despliegue. La interfaz web ha sido creada con **JavaScript**, y la base de datos se gestiona con **MySQL**.
 
@@ -14,12 +17,6 @@
 - **JavaScript (JS)**: Utilizado para la creación de la página web y la interacción del usuario.
 - **MySQL**: Sistema de gestión de bases de datos relacional.
 
-## 📁 Estructura del Proyecto
-
-El proyecto sigue una arquitectura de **Modelo-Servicio-Controlador (MVC)**:
-
-
-
 
 ## 🚀 Despliegue
 
@@ -28,9 +25,8 @@ Para desplegar el proyecto, asegúrate de contar con un entorno adecuado con **J
 ## 📊 Funcionalidades
 
 - **Gestión de Productos**: Añadir, editar y eliminar productos.
-- **Gestión de Clientes**: Añadir, editar y eliminar clientes.
 - **Registro de Ventas**: Registro de ventas con cálculo automático de totales.
-- **Reportes**: Generación de reportes de ventas y clientes.
+- **Reportes**: Generación de reportes de ventas.
 
 ## 🌐 Interfaz Web
 
