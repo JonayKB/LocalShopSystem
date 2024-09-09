@@ -11,10 +11,10 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.jonay.kb</groupId>
-	<artifactId>shopsysten</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>shopsystem</artifactId>
+	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>shopsysten</name>
+	<name>shopsystem</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
