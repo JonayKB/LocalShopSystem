@@ -164,7 +164,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* Eliminar flechas de entrada numérica en Firefox */
 input[type="number"] {
-    -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 /* Estilo para el botón de enviar */
