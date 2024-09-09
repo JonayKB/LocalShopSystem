@@ -84,7 +84,7 @@ function reloadItems() {
             </tr>
         </thead>
         <tbody>`;
-    fetchGetUrl('https://localhost:8444/kiosco/item/')
+    fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/item/')
         .then(items => {
             items.forEach(item => {
                 itemsHtml += `<tr>
@@ -104,7 +104,7 @@ function reloadItems() {
 }
 
 
-fetchGetUrl('https://localhost:8444/kiosco/category/').then(categories => {
+fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
     categories.forEach(element => {
       categoriesDictionary.set(element.id, element.name); 
     });
@@ -141,7 +141,7 @@ function hideCreateItem() {
 
 function postNewItem() {
     // Devuelve la promesa del fetch para manejar la respuesta en createItem
-    return fetch('https://localhost:8444/kiosco/item/', {
+    return fetch('https://zombiesurvive.ddns.net:8444/kiosco/item/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ async function createItem() {
 
     // Verifica si el item ya existe
     try {
-        const existingItem = await fetchGetUrl(`https://localhost:8444/kiosco/item/${idContainer.value}`);
+        const existingItem = await fetchGetUrl(`https://zombiesurvive.ddns.net:8444/kiosco/item/${idContainer.value}`);
         if (existingItem != null) {
             alert('El código ya existe');
             return;
