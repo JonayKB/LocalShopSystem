@@ -75,6 +75,6 @@ El proyecto sigue una arquitectura de **Modelo-Servicio-Controlador (MVC)**:
 Para cualquier consulta o sugerencia, puedes contactar a los desarrolladores en:
 
 - **Correo**: jonaykb@gmail.com.com
-- **GitHub**: [Tu usuario de GitHub](https://github.com/jonaykb)
+- **GitHub**: [JonayKB](https://github.com/jonaykb)
 
 ---
