@@ -1,5 +1,5 @@
 # LocalShopSystem
-<div text-align="center">
+<div align="center">
 
 ![LocalShopSystem Logo](/web/images/icon.ico)
 
