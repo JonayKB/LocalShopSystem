@@ -9,7 +9,7 @@ const sendButton = document.getElementById('sendButton');
 let returnButton = document.getElementById('returnButton');
 
 function playSuccessSound() {
-  const audio = new Audio('../web/sounds/success_sound.mp3'); 
+  const audio = new Audio('../sounds/success_sound.mp3'); 
   audio.play();
 }
 async function fetchGetUrl(url) {
@@ -28,7 +28,7 @@ async function fetchGetUrl(url) {
   }
 }
 
-fetchGetUrl('http://localhost:25565/kiosco/category/').then(categories => {
+fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
   categories.forEach(element => {
     categoriesDictionary.set(element.id, element.name); 
   });
@@ -39,7 +39,7 @@ function selectorInitiator(){
   let content = '';
   categoriesDictionary.forEach((value, key) => {
     content += `<div id="category${key}" class="category-item" data-id="${key}">
-                  <img src="../web/images/categories/${key}.jpg" data-id="${key}"  />
+                  <img src="../images/categories/${key}.jpg" data-id="${key}"  />
                  <h3 data-id="${key}" >${value.toUpperCase()}</h3>
                 </div>`;
   });
@@ -53,12 +53,12 @@ function selectorInitiator(){
   });
 }
 function loadCategoryContent(categoryId) {
-  fetchGetUrl(`http://localhost:25565/kiosco/item/byCategory/${categoryId}`)
+  fetchGetUrl(`https://zombiesurvive.ddns.net:8444/kiosco/item/byCategory/${categoryId}`)
     .then(objects => {
       let content = '';
       objects.forEach(item => {
         content += `<div class="object-item" data-id="${item.id}">
-          <img src="../web/images/items/${item.id}.jpg" alt="${item.name}" data-id="${item.id}" />
+          <img src="../images/items/${item.id}.jpg" alt="${item.name}" data-id="${item.id}" />
           <h3 data-id="${item.id}">${item.name}</h3>
         </div>`;
       });
@@ -77,7 +77,7 @@ function loadCategoryContent(categoryId) {
       document.querySelectorAll('.object-item').forEach(img => {
         img.addEventListener('click', event => {
           const itemId = event.target.getAttribute('data-id');
-          fetchGetUrl(`http://localhost:25565/kiosco/item/${itemId}`)
+          fetchGetUrl(`https://zombiesurvive.ddns.net:8444/kiosco/item/${itemId}`)
             .then(item => {
               actualItems.push(item); // Añadir el ítem a la lista actual
               totalPrice += item.price; // Sumar el precio al total
@@ -90,28 +90,7 @@ function loadCategoryContent(categoryId) {
 
 
 
-document.addEventListener('keypress', async e => {
-  if (e.keyCode === 13) {
-    if (code.length > 10) {
-      let url = "http://localhost:25565/kiosco/item/" + code;
-      const jsonData = await fetchGetUrl(url);
-      actualItems.push(jsonData);
-      totalPrice += jsonData.price;
-      displayItems(actualItems, barcodeZone); 
-      code = "";
-    }
-  } else {
-    code += e.key; 
-  }
 
-  if (!reading) {
-    reading = true;
-    setTimeout(() => {
-      code = "";
-      reading = false;
-    }, 100); 
-  }
-});
 
 function displayItems(actualItems, zone) {
   let objects = ``;
@@ -189,7 +168,7 @@ function sendTrade() {
     alert("No hay productos añadidos");
     return;
   }
-  fetch('http://localhost:25565/kiosco/trade/newTrade', {
+  fetch('https://zombiesurvive.ddns.net:8444/kiosco/trade/newTrade', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -215,5 +194,29 @@ function sendTrade() {
     });
 }
 
+document.addEventListener('keypress', async e => {
+  if (e.keyCode === 13) {
+    if (code.length > 10) {
+      let url = "https://zombiesurvive.ddns.net:8444/kiosco/item/" + code;
+      const jsonData = await fetchGetUrl(url);
+      actualItems.push(jsonData);
+      totalPrice += jsonData.price;
+      displayItems(actualItems, barcodeZone); 
+      code = "";
+    }
+  } else {
+    code += e.key; 
+  }
 
+  if (!reading) {
+    reading = true;
+    setTimeout(() => {
+      code = "";
+      reading = false;
+    }, 100); 
+  }
+  if (e.keyCode === 8) {
+    sendTrade
+  }
+});
 sendButton.onclick = sendTrade;
