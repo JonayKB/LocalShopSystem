@@ -290,4 +290,18 @@ table {
     color: rgba(255, 0, 0, 1); /* Color rojo al pasar el ratón */
 }
 
+#deleteButton{
+    background-color: transparent; /* Sin color de fondo */
+    color: rgba(255, 0, 0, 1);
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Esquinas redondeadas */
+    padding: 5px 10px; /* Espaciado interno para ajustar tamaño del botón */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    transition: color 0.3s ease; /* Efecto de transición suave */
+}
+
+#deleteButton:hover {
+    background-color: transparent; /* Fondo rojo al pasar el ratón */
+    color: rgba(255, 100, 100, 1); /* Color de texto blanco al pasar el ratón */
+}
 

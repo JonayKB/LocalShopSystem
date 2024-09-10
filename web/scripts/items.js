@@ -37,6 +37,9 @@ function attachTableSorting() {
             if (column === 'price') {
                 return (order === 'asc' ? parseFloat(aText) - parseFloat(bText) : parseFloat(bText) - parseFloat(aText));
             }
+            if (column === 'id') {
+                return (order === 'asc' ? parseFloat(aText) - parseFloat(bText) : parseFloat(bText) - parseFloat(aText));
+            }
 
             return (order === 'asc' ? aText.localeCompare(bText) : bText.localeCompare(aText));
         });
@@ -81,6 +84,7 @@ function reloadItems() {
                 <th data-column="name">Nombre</th>
                 <th data-column="price">Precio</th>
                 <th data-column="category">Categoría</th>
+                <th data-column="actions"></th>
             </tr>
         </thead>
         <tbody>`;
@@ -89,9 +93,10 @@ function reloadItems() {
             items.forEach(item => {
                 itemsHtml += `<tr>
                                 <td>${item.id}</td>
-                                <td>${item.name}</td>
-                                <td>${item.price}€</td>
+                                <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
+                                <td>${item.price.toFixed(2)}€</td>
                                 <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td>
+                                <td><button id="deleteButton" onClick="deleteItem(${item.id})">✖</button></td>
                               </tr>`;
             });
             itemsHtml += '</tbody></table>';
@@ -110,12 +115,29 @@ fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categor
     });
     let categoriesSelects = '<option value="-1">--Selecciona una categoria--</option>';
     categoriesDictionary.forEach((value, key) => {
-        categoriesSelects += `<option value="${key}">${value.toUpperCase()}</option>`;
+        categoriesSelects += `<option value="${key}">${value.charAt(0).toUpperCase() + value.slice(1)}</option>`;
       });
     categoryContainer.innerHTML = categoriesSelects;
   });
   reloadItems();
-function showCreateItem(id) {
+
+async function deleteItem(itemId){
+    url = `https://zombiesurvive.ddns.net:8444/kiosco/item/+${itemId}`
+    try {
+        const response = await fetch(url,{
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            alert("No se ha podido realizar la operación"); 
+        }
+        const json = await response.json(); 
+        return json;
+    } catch (error) {
+        alert(error.message); 
+    }
+    reloadItems();
+}
+  function showCreateItem(id) {
     const createItemContainer = document.getElementById('createItem-container');
     const overlay = document.getElementById('overlay');
     if (id!=null) {
@@ -205,7 +227,7 @@ async function createItem() {
 
 document.addEventListener('keypress', async e => {
     if (e.keyCode === 13) {
-        if (code.length > 10) {
+        if (code.length > 8) {
             showCreateItem(code); // Muestra el contenedor cuando se cumple la condición
             code = "";
         }

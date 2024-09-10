@@ -40,7 +40,7 @@ function selectorInitiator(){
   categoriesDictionary.forEach((value, key) => {
     content += `<div id="category${key}" class="category-item" data-id="${key}">
                   <img src="../images/categories/${key}.png" data-id="${key}"  />
-                 <h3 data-id="${key}" >${value.toUpperCase()}</h3>
+                 <h3 data-id="${key}" >${value.charAt(0).toUpperCase() + value.slice(1)}</h3>
                 </div>`;
   });
   selectorZone.innerHTML = content;
@@ -59,7 +59,7 @@ function loadCategoryContent(categoryId) {
       objects.forEach(item => {
         content += `<div class="object-item" data-id="${item.id}">
           <img src="../images/items/${item.id}.png" alt="${item.name}" data-id="${item.id}" />
-          <h3 data-id="${item.id}">${item.name}</h3>
+          <h3 data-id="${item.id}">${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</h3>
         </div>`;
       });
       content += `<button id="returnButton">Volver</button>`;
@@ -112,8 +112,8 @@ function displayItems(actualItems, zone) {
 
   uniqueItems.forEach(item => {
     objects += `<tr>
-      <td>${item.name}</td>
-      <td>${item.price}</td>
+      <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
+      <td>${item.price.toFixed(2)}</td>
       <td>${categoriesDictionary.get(item.categoryId)}</td>
       <td>
         <button onclick="deleteItem(${item.id})" class= "quantity-button">-</button> 
@@ -196,9 +196,12 @@ function sendTrade() {
 
 document.addEventListener('keypress', async e => {
   if (e.keyCode === 13) {
-    if (code.length > 10) {
+    if (code.length > 8) {
       let url = "https://zombiesurvive.ddns.net:8444/kiosco/item/" + code;
       const jsonData = await fetchGetUrl(url);
+      if(jsonData == null) {
+        throw new Error('Este objeto no se encuentra registrado');
+      }
       actualItems.push(jsonData);
       totalPrice += jsonData.price;
       displayItems(actualItems, barcodeZone); 
@@ -214,9 +217,6 @@ document.addEventListener('keypress', async e => {
       code = "";
       reading = false;
     }, 100); 
-  }
-  if (e.keyCode === 8) {
-    sendTrade
   }
 });
 sendButton.onclick = sendTrade;
