@@ -137,6 +137,9 @@ async function deleteItem(itemId){
     }
     reloadItems();
 }
+function updateItem(itemId){
+    reloadItems();
+}
   function showCreateItem(id) {
     const createItemContainer = document.getElementById('createItem-container');
     const overlay = document.getElementById('overlay');
