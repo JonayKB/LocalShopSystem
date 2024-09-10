@@ -96,7 +96,7 @@ function reloadItems() {
                                 <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
                                 <td>${item.price.toFixed(2)}€</td>
                                 <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td>
-                                <td><button id="deleteButton" onClick="deleteItem(${item.id})">✖</button></td>
+                                <td><button id="deleteButton" onClick="deleteItem(${item.id})">✖</button><button id="updateButton" onClick="updateItem(${item.id})">✏️</button></td>
                               </tr>`;
             });
             itemsHtml += '</tbody></table>';
