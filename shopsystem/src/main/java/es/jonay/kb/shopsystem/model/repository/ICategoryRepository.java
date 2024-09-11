@@ -18,5 +18,6 @@ public interface ICategoryRepository extends JpaRepository<Category,Long> {
     Optional<Category> findById(Long id);
 
     Category save(Category entity);
+
 }
 

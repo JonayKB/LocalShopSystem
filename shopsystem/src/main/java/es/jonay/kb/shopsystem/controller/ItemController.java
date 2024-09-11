@@ -59,7 +59,24 @@ public class ItemController {
         return itemDtos;
     }
 
+    public List<ItemDto> findByTradeId(Long tradeId){
+        List<ItemDto> itemDtos = new ArrayList<>();
+        for (Item item : itemRepository.findByTradesId(tradeId)) {
+            itemDtos.add(ItemMapper.INSTANCE.toItemDto(item));
+        }
+        return itemDtos;
+    }
+
     public ItemDto save(ItemDto itemDto){
+        Item item = ItemMapper.INSTANCE.toItem(itemDto);
+        item.setCategory(categoryRepository.findById(itemDto.getCategoryId()).orElse(null));
+        return ItemMapper.INSTANCE.toItemDto(itemRepository.save(item));
+    }
+
+    public ItemDto update(ItemDto itemDto){
+        if (itemRepository.findById(itemDto.getId())==null) {
+            return itemDto;
+        }
         Item item = ItemMapper.INSTANCE.toItem(itemDto);
         item.setCategory(categoryRepository.findById(itemDto.getCategoryId()).orElse(null));
         return ItemMapper.INSTANCE.toItemDto(itemRepository.save(item));

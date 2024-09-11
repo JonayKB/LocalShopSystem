@@ -318,3 +318,23 @@ table {
     background-color: transparent; /* Fondo rojo al pasar el ratón */
 }
 
+tr .accordion-td {
+    
+    max-height: 0; /* Inicialmente oculto */
+    overflow: hidden; /* Oculta el contenido que se desborda */
+    transition: max-height 0.3s ease-out; /* Transición suave */
+}
+.accordion-content {
+    max-height: 0; /* Inicialmente oculto */
+    overflow: hidden; /* Oculta el contenido que se desborda */
+    transition: max-height 0.3s ease-out; /* Transición suave */
+}
+
+.accordion-content.show {
+    max-height: 1000px; /* Ajusta este valor según sea necesario */
+}
+
+.accordion-td.show {
+    max-height: 1000px; /* Ajusta este valor según sea necesario */
+}
+

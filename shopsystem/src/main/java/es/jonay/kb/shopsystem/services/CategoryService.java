@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -53,7 +54,12 @@ public class CategoryService {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable(name = "id") final Long id) {
-        categoryController.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final Long id) {
+        try {
+            categoryController.deleteById(id);
+            return ResponseEntity.noContent().build(); 
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

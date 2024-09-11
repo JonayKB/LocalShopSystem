@@ -20,5 +20,7 @@ public interface IItemRepository extends JpaRepository<Item,Long> {
     Item save(Item entity);
 
     List<Item> findByCategoryId(Long categoryId);
+
+    List<Item> findByTradesId(Long tradesId);
 }
 

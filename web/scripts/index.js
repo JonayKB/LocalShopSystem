@@ -196,7 +196,7 @@ function sendTrade() {
 
 document.addEventListener('keypress', async e => {
   if (e.keyCode === 13) {
-    if (code.length > 8) {
+    if (code.length > 7) {
       let url = "https://zombiesurvive.ddns.net:8444/kiosco/item/" + code;
       const jsonData = await fetchGetUrl(url);
       if(jsonData == null) {

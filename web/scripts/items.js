@@ -91,13 +91,16 @@ function reloadItems() {
     fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/item/')
         .then(items => {
             items.forEach(item => {
-                itemsHtml += `<tr>
-                                <td>${item.id}</td>
-                                <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
-                                <td>${item.price.toFixed(2)}€</td>
-                                <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td>
-                                <td><button id="deleteButton" onClick="deleteItem(${item.id})">✖</button><button id="updateButton" onClick="updateItem(${item.id})">✏️</button></td>
-                              </tr>`;
+                itemsHtml += `<tr data-id="${item.id}">
+                <td>${item.id}</td>
+                <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
+                <td>${item.price.toFixed(2)}€</td>
+                <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td>
+                <td>
+                    <button id="deleteButton" onClick="deleteItem(${item.id})">✖</button>
+                    <button id="updateButton" onClick="updateItem(${item.id})">✏️</button>
+                </td>
+              </tr>`;
             });
             itemsHtml += '</tbody></table>';
             itemContainer.innerHTML = itemsHtml;
@@ -121,25 +124,99 @@ fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categor
   });
   reloadItems();
 
-async function deleteItem(itemId){
-    url = `https://zombiesurvive.ddns.net:8444/kiosco/item/+${itemId}`
+  async function deleteItem(itemId) {
+    const url = `https://zombiesurvive.ddns.net:8444/kiosco/item/${itemId}`;
     try {
-        const response = await fetch(url,{
+        const response = await fetch(url, {
             method: 'DELETE'
         });
-        if (!response.ok) {
-            alert("No se ha podido realizar la operación"); 
+
+        console.log(response.status);
+
+        if (response.ok) {
+            if (response.status === 204) {
+                console.log('Item deleted successfully');
+            } else {
+                const json = await response.json();
+                console.log(json);
+            }
+        } else {
+            console.error('Error deleting item');
         }
-        const json = await response.json(); 
-        return json;
+
+        reloadItems();
     } catch (error) {
-        alert(error.message); 
+        alert(error.message);
     }
-    reloadItems();
 }
-function updateItem(itemId){
-    reloadItems();
+
+function updateItem(itemId) {
+    // Seleccionar la fila que contiene el itemId usando el atributo data-id
+    const row = document.querySelector(`tr[data-id='${itemId}']`);
+    
+    // Obtener los valores actuales de la fila
+    const id = row.children[0].innerText;
+    const name = row.children[1].innerText;
+    const price = row.children[2].innerText.replace('€', '');
+    const category = row.children[3].innerText;
+
+    // Reemplazar la fila por un formulario de edición
+    row.innerHTML = `
+        <td>${id}</td>
+        <td><input type="text" id="updateName" value="${name}" /></td>
+        <td><input type="number" id="updatePrice" value="${price}" step="0.01" /></td>
+        <td>
+            <select id="updateCategory">
+                ${Array.from(categoriesDictionary).map(([key, value]) => 
+                    `<option value="${key}" ${value.toUpperCase() === category ? 'selected' : ''}>
+                        ${value.charAt(0).toUpperCase() + value.slice(1)}
+                    </option>`
+                ).join('')}
+            </select>
+        </td>
+        <td>
+            <button id="completeButton" onClick="completeUpdate(${id})">✔️</button>
+        </td>
+    `;
 }
+
+
+async function completeUpdate(itemId) {
+    const name = document.getElementById('updateName').value;
+    const price = parseFloat(document.getElementById('updatePrice').value);
+    const categoryId = parseInt(document.getElementById('updateCategory').value);
+
+    if (!name || price <= 0 || categoryId === -1) {
+        alert('Por favor, complete todos los campos correctamente.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://zombiesurvive.ddns.net:8444/kiosco/item/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: itemId,
+                name: name,
+                price: price,
+                categoryId: categoryId
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('No se ha podido actualizar el item');
+        }
+
+        // Actualizar la tabla y ocultar el formulario
+        reloadItems();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('No se ha podido actualizar el item');
+    }
+}
+
   function showCreateItem(id) {
     const createItemContainer = document.getElementById('createItem-container');
     const overlay = document.getElementById('overlay');
@@ -230,7 +307,7 @@ async function createItem() {
 
 document.addEventListener('keypress', async e => {
     if (e.keyCode === 13) {
-        if (code.length > 8) {
+        if (code.length > 7) {
             showCreateItem(code); // Muestra el contenedor cuando se cumple la condición
             code = "";
         }
