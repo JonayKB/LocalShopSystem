@@ -27,6 +27,7 @@ function reloadItems() {
 
     fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/trade/')
         .then(items => {
+            items.reverse();
             items.forEach(item => {
                 let date = new Date(item.date);
                 itemsHtml += `<tr data-id="${item.id}" class="accordion-button">

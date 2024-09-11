@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caja</title>
+    <link rel="stylesheet" href="../styles/cash.css"/>
+    <link rel="icon" href="../images/icon.ico" type="image/x-icon">
+</head>
+<body>
+    <nav id="mainNav">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
+          <li class="nav-item"><a href="./items.html" class="nav-link">Productos</a></li>
+          <li class="nav-item"><a href="./trades.html" class="nav-link">Pedidos</a></li>
+          <li class="nav-item"><a href="./invoice.html" class="nav-link">Devoluciones</a></li>
+          <li class="nav-item"><a href="" class="nav-link">Caja</a></li>
+        </ul>
+      </nav>
+      <label for="datetime" id="datetime-label-start">Selecciona el comienzo:</label>
+      <input type="datetime-local" name="datetime-start" id="datetime-start">
+      <label for="datetime" id="datetime-label-end">Selecciona el final:</label>
+      <input type="datetime-local" name="datetime-end" id="datetime-end">
+
+      <button id="sendButton" onclick="displayTrades()">Generar reporte</button>
+      <div id="items-container" class="centered-table-container"></div>
+
+      <script src="../scripts/cash.js" ></script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex; /* This makes it easier to align #barcodeZone and #selector */
+    height: 100vh; /* Full height view */
+    background-color: rgba(34, 34, 34, 1); /* Dark background */
+    color: rgba(200, 200, 200, 1); /* Light text color */
+    padding-top: 50px; /* Adjusted padding to avoid content being hidden under the nav */
+    box-sizing: border-box; /* Ensures padding is included in width/height calculations */
+}
+
+/* Styling for the navigation bar */
+#mainNav {
+    position: fixed; /* Fixes it to the top of the viewport */
+    top: 0;
+    left: 0;
+    width: 100%; /* Takes up the full width */
+    background-color: rgba(0, 0, 0, 1); /* Black background */
+    padding: 10px 0; /* Padding for some space around the content */
+    z-index: 1000; /* Ensures the nav bar is above other content */
+}
+
+/* Styling for the navigation list */
+.nav-list {
+    list-style: none; /* Removes list bullets */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Aligns items horizontally */
+    justify-content: space-between; /* Distributes items evenly across the nav */
+    align-items: center; /* Centers items vertically */
+    padding: 0 20px; /* Adds space on the sides */
+}
+
+/* Styling for each navigation item */
+.nav-item {
+    margin: 0; /* Removes margin between items */
+}
+
+/* Styling for the navigation links */
+.nav-link {
+    color: rgba(255, 255, 255, 1); /* White text color */
+    text-decoration: none; /* Removes underline from links */
+    font-size: 1rem;
+    padding: 5px 15px; /* Adds space around the text of the link */
+    border-radius: 5px; /* Slightly rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover {
+    background-color: rgba(50, 50, 50, 1); /* Lighter gray background on hover */
+    color: rgba(255, 255, 255, 1); /* Ensures text color remains white */
+}
+
+.quantity-button {
+    background-color: rgba(34, 34, 34, 1); /* Dark background color */
+    color: rgba(200, 200, 200, 1); /* Light text color for visibility */
+    border: 1px solid rgba(85, 85, 85, 1); /* Soft border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for a better button size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition effects */
+}
+
+.quantity-button:hover {
+    background-color: rgba(50, 50, 50, 1); /* Slightly lighter on hover */
+    border-color: rgba(100, 100, 100, 1); /* Change border color on hover */
+}
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(102, 102, 102, 1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(153, 153, 153, 1);
+}
+
+/* Style the input box itself */
+input[type="datetime-local"] {
+    background-color: rgba(34, 34, 34, 1); /* Dark background */
+    color: rgba(200, 200, 200, 1); /* Light text color */
+    border: 1px solid rgba(85, 85, 85, 1); /* Soft border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for a better size */
+    font-size: 1rem; /* Adjust font size */
+    outline: none; /* Removes the default outline */
+    box-sizing: border-box; /* Ensure padding is included in width */
+    width: 10%; /* Full width of the container */
+    height: 5%;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+    text-align: center;
+}
+
+/* Hover effect on the input */
+input[type="datetime-local"]:hover {
+    background-color: rgba(50, 50, 50, 1); /* Slightly lighter on hover */
+    border-color: rgba(100, 100, 100, 1); /* Change border color on hover */
+}
+
+/* Focus effect for when the input is active */
+input[type="datetime-local"]:focus {
+    background-color: rgba(50, 50, 50, 1); /* Lighter background on focus */
+    border-color: rgba(153, 153, 153, 1); /* Lighter border on focus */
+}
+
+/* Custom styling for the calendar dropdown icon in WebKit browsers (Chrome, Safari) */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(100%); /* Makes the icon white */
+    cursor: pointer; /* Changes the cursor on hover */
+}
+
+/* Scrollbar styling (applies if the datetime picker has a scrollable dropdown) */
+input[type="datetime-local"]::-webkit-scrollbar {
+    width: 8px;
+}
+
+input[type="datetime-local"]::-webkit-scrollbar-thumb {
+    background-color: rgba(102, 102, 102, 1);
+    border-radius: 4px;
+}
+
+input[type="datetime-local"]::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(153, 153, 153, 1);
+}
+
+#datetime-label-start{
+    margin-top: 13px;
+    margin-left: 25%;
+    margin-right: 3px;
+}
+#datetime-label-end{
+    margin-top: 13px;
+    margin-left: 10%;
+    margin-right: 3px;
+}
+
+#sendButton {
+    position: absolute;
+    top: 100px;
+    right: 46%;
+    padding: 15px 30px;
+    background-color: rgba(40, 167, 69, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#sendButton:hover {
+    background-color: rgba(33, 136, 56, 1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+#sendButton:active {
+    transform: scale(0.95); /* Slightly shrink the button when pressed */
+}
+
+
+/* Estilo para las filas alternas de la tabla */
+tr:nth-child(even) {
+    background-color: rgba(40, 40, 40, 1); /* Fondo gris oscuro para filas pares */
+}
+
+/* Estilo para la fila activa o seleccionada */
+tr:hover {
+    background-color: rgba(50, 50, 50, 1); /* Fondo más claro al pasar el ratón */
+}
+
+.centered-table-container {
+    margin-top: 100px;
+    position: absolute;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+    padding: 20px; /* Espaciado alrededor de la tabla */
+    box-sizing: border-box; /* Incluye el padding en el cálculo del ancho total */
+}
+
+/* Estilos de la tabla */
+table {
+    width: 80%; /* Ocupa todo el ancho disponible dentro del contenedor */
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+    text-align: center; /* Centra el texto en las celdas */
+    background-color: rgba(50, 50, 50, 1); /* Fondo gris oscuro para la tabla */
+    border-radius: 8px; /* Bordes redondeados para la tabla */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra alrededor de la tabla */
+    margin: 0 auto; /* Centra la tabla horizontalmente */
+}
+
+/* Estilo para las celdas de la tabla */
+td, th {
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid rgba(70, 70, 70, 1); /* Borde gris oscuro */
+    color: rgba(220, 220, 220, 1); /* Color de texto claro */
+    vertical-align: middle; /* Alinea el contenido verticalmente en el centro */
+}
+
+/* Estilos para las cabeceras de la tabla */
+th {
+    background-color: rgba(30, 30, 30, 1); /* Fondo gris oscuro para las cabeceras */
+    text-align: center; /* Centra el texto en las cabeceras */
+    cursor: pointer; /* Cambia el cursor a mano para indicar que se puede hacer clic */
+    position: relative; /* Necesario para la flecha de ordenación */
+    user-select: none; /* Evita la selección de texto */
+}

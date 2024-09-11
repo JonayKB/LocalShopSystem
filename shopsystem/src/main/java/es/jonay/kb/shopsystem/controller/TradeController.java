@@ -1,12 +1,16 @@
 package es.jonay.kb.shopsystem.controller;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import es.jonay.kb.shopsystem.api.dto.ItemDto;
 import es.jonay.kb.shopsystem.api.dto.TradeDto;
@@ -71,7 +75,23 @@ public class TradeController {
         trade.setItems(itemList);
         return TradeMapper.INSTANCE.toTradeDto(tradeRepository.save(trade));
     }
-    
+
+     public List<TradeDto> findTradesInRange(LocalDateTime startDate,LocalDateTime endDate) {
+        
+        // Ensure that the time range is correctly defined
+        if (startDate == null) {
+            startDate = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIDNIGHT);
+        }
+        
+        if (endDate == null) {
+            endDate = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX);
+        }
+        List<TradeDto> tradesDtoList = new ArrayList<TradeDto>();
+        for (Trade trade : tradeRepository.findAllTradesInRange(startDate, endDate)) {
+            tradesDtoList.add(TradeMapper.INSTANCE.toTradeDto(trade));
+        }
+        return tradesDtoList;
+    }
     public void deleteById(Long id){
         tradeRepository.deleteById(id);
     }
