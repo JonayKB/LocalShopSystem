@@ -113,12 +113,14 @@ function displayItems(actualItems, zone) {
   uniqueItems.forEach(item => {
     objects += `<tr>
       <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
-      <td>${item.price.toFixed(2)}</td>
-      <td>${categoriesDictionary.get(item.categoryId)}</td>
-      <td>
-        <button onclick="deleteItem(${item.id})" class= "quantity-button">-</button> 
+      <td>${item.price.toFixed(2)}€</td>
+      <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td>
+      <td class="actionsButtons">
+      <button onclick="deleteItem(${item.id},5)" class= "quantity-button">--</button> 
+        <button onclick="deleteItem(${item.id},1)" class= "quantity-button">-</button> 
         ${frequencies[item.id]} 
-        <button onclick="addItem(${item.id})" class= "quantity-button">+</button>
+        <button onclick="addItem(${item.id},1)" class= "quantity-button">+</button>
+        <button onclick="addItem(${item.id},5)" class= "quantity-button">++</button>
       </td>
       </tr>`;
   });
@@ -133,7 +135,7 @@ function displayItems(actualItems, zone) {
         <th>CANTIDAD</th>
       </tr>
       ${objects}
-      <tr><th>TOTAL</th><th>${totalPrice.toFixed(2)}</th></tr>
+      <tr><th>TOTAL</th><th>${totalPrice.toFixed(2)}€</th></tr>
     </table>
   </div>
   `;
@@ -141,24 +143,33 @@ function displayItems(actualItems, zone) {
   zone.innerHTML = templateItems;
 }
 
-function addItem(itemId) {
+function addItem(itemId,times) {
   // Find the item by itemId
   const item = actualItems.find(i => i.id === itemId);
   // Add item to the actualItems array and update the total price
   if (item) {
-    totalPrice += item.price;
-    actualItems.push(item);
+    for (let index = 0; index < times; index++) {
+      totalPrice += item.price;
+      actualItems.push(item);
+    
+      
+    }
     displayItems(actualItems, barcodeZone);
   }
 }
 
-function deleteItem(itemId) {
+function deleteItem(itemId,times) {
   // Find the item by itemId
   const itemIndex = actualItems.findIndex(i => i.id === itemId);
   // Remove item from actualItems array and update the total price
   if (itemIndex !== -1) {
-    totalPrice -= actualItems[itemIndex].price;
-    actualItems.splice(itemIndex, 1); // Remove one instance of the item
+    for (let index = 0; index < times; index++) {
+      if (actualItems[itemIndex]==null){
+        break;
+      }
+      totalPrice -= actualItems[itemIndex].price;
+      actualItems.splice(itemIndex, 1); // Remove one instance of the item
+    }
     displayItems(actualItems, barcodeZone);
   }
 }

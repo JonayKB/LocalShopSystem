@@ -55,7 +55,7 @@ body {
 
 /* Styling the barcodeZone */
 #barcodeZone {
-    width: 25%; /* Set width for barcode zone */
+    width: 30%; /* Set width for barcode zone */
     background-color: rgba(40, 40, 40, 1); /* Dark background for clarity */
     border-left: 2px solid rgba(0, 0, 0, 1); /* Slight border to separate it */
     padding: 20px;
@@ -72,7 +72,7 @@ body {
 #barcodeZone th, #barcodeZone td {
     padding: 10px;
     border-bottom: 1px solid rgba(60, 60, 60, 1); /* Softer, dark border */
-    text-align: left;
+    text-align: center;
 }
 
 #barcodeZone th {
@@ -173,6 +173,7 @@ body {
     transform: scale(0.95); /* Slightly shrink the button when pressed */
 }
 .quantity-button {
+    font-size: 10px;
     background-color: rgba(34, 34, 34, 1); /* Dark background color */
     color: rgba(200, 200, 200, 1); /* Light text color for visibility */
     border: 1px solid rgba(85, 85, 85, 1); /* Soft border */
@@ -181,7 +182,9 @@ body {
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition effects */
 }
-
+.actionsButtons{
+    white-space: nowrap;
+}
 .quantity-button:hover {
     background-color: rgba(50, 50, 50, 1); /* Slightly lighter on hover */
     border-color: rgba(100, 100, 100, 1); /* Change border color on hover */

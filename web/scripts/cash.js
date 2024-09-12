@@ -41,11 +41,12 @@ else{
     
 
     // Construye la URL con los parámetros de fecha
-    let url = `https://zombiesurvive.ddns.net:8444/kiosco/trade/range?startDate=${encodeURIComponent(startDate.toISOString())}&endDate=${encodeURIComponent(endDate.toISOString())}`;
+    let url = `https://localhost:8444/kiosco/trade/range?startDate=${encodeURIComponent(startDate.toISOString())}&endDate=${encodeURIComponent(endDate.toISOString())}`;
     // Realiza la solicitud fetch
     fetch(url)
         .then(response => response.json())
         .then(trades => {
+            let itemQuantities = new Map();
             let categoryPriceMap = new Map();
             let contentInfo = `<table id="itemsTable" class="centered-table">
                 <thead>
@@ -62,14 +63,18 @@ else{
                 trade.items.forEach(item => {
                     totalPrice += item.price;
                     const currentCategoryTotal = categoryPriceMap.get(item.categoryId) || 0;
+    
 
                     // Actualiza el mapa con el nuevo total de la categoría
                     categoryPriceMap.set(item.categoryId, currentCategoryTotal + item.price);
+                    
                     contentInfo += `<tr data-id="${item.id}">
                     <td>${item.id}</td>
                     <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
                     <td>${item.price.toFixed(2)}€</td>
-                    <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td></tr>`;
+                    <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td>
+                    <td>${itemQuantities.get(item.id)}</td>
+                    </tr>`;
                 });
             });
 
@@ -100,7 +105,7 @@ else{
 }
 
 
-fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
+fetchGetUrl('https://localhost:8444/kiosco/category/').then(categories => {
     categories.forEach(element => {
       categoriesDictionary.set(element.id, element.name); 
     });
