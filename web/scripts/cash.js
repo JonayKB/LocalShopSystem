@@ -16,38 +16,62 @@ async function fetchGetUrl(url) {
     } catch (error) {
       alert(error.message); 
     }
-  }
+}
 
-  function displayTrades() {
+function displayTrades() {
     let totalPrice = 0;
     let startDateContent = document.getElementById('datetime-start');
     let endDateContent = document.getElementById('datetime-end');
     let startDate = new Date(startDateContent.value);
     let endDate = new Date(endDateContent.value);
     let now = new Date();
-if (startDateContent.value != ''){
-    startDate = new Date(startDateContent.value);
-    console.log(startDateContent.value)
-}
-else{
-    startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0,1 , 0, 0);
-}
-    if (endDateContent.value!= ''){
-    endDate = new Date(endDateContent.value);
-}else{
-    endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 0, 0);
-
-}
     
+    if (startDateContent.value != ''){
+        startDate = new Date(startDateContent.value);
+        console.log(startDateContent.value);
+    } else {
+        startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 1, 0, 0);
+    }
+
+    if (endDateContent.value != ''){
+        endDate = new Date(endDateContent.value);
+    } else {
+        endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 0, 0);
+    }
 
     // Construye la URL con los parámetros de fecha
-    let url = `https://localhost:8444/kiosco/trade/range?startDate=${encodeURIComponent(startDate.toISOString())}&endDate=${encodeURIComponent(endDate.toISOString())}`;
+    let url = `https://zombiesurvive.ddns.net:8444/kiosco/trade/range?startDate=${encodeURIComponent(startDate.toISOString())}&endDate=${encodeURIComponent(endDate.toISOString())}`;
+
     // Realiza la solicitud fetch
     fetch(url)
         .then(response => response.json())
         .then(trades => {
-            let itemQuantities = new Map();
+            let itemQuantities = new Map(); // Mapa para contar las cantidades de cada ítem
             let categoryPriceMap = new Map();
+            let uniqueItems = new Map(); // Mapa para almacenar ítems únicos
+
+            trades.forEach(trade => {
+                trade.items.forEach(item => {
+                    totalPrice += item.price;
+                    
+
+                    // Contar las cantidades de cada ítem
+                    const currentQuantity = itemQuantities.get(item.id) || 0;
+                    itemQuantities.set(item.id, currentQuantity + 1);
+
+                    const currentCategoryTotal = categoryPriceMap.get(item.categoryId) || 0;
+
+                    // Actualiza el mapa con el nuevo total de la categoría
+                    categoryPriceMap.set(item.categoryId, currentCategoryTotal + item.price);
+
+                    // Almacenar ítems únicos
+                    if (!uniqueItems.has(item.id)) {
+                        uniqueItems.set(item.id, item);  // Añadir el ítem si no está ya en el mapa
+                    }
+                });
+            });
+
+            // Construir la tabla con cantidades de ítems únicos
             let contentInfo = `<table id="itemsTable" class="centered-table">
                 <thead>
                     <tr>
@@ -55,30 +79,22 @@ else{
                         <th data-column="name">Nombre</th>
                         <th data-column="price">Precio</th>
                         <th data-column="category">Categoría</th>
+                        <th data-column="quantity">Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>`;
 
-            trades.forEach(trade => {
-                trade.items.forEach(item => {
-                    totalPrice += item.price;
-                    const currentCategoryTotal = categoryPriceMap.get(item.categoryId) || 0;
-    
-
-                    // Actualiza el mapa con el nuevo total de la categoría
-                    categoryPriceMap.set(item.categoryId, currentCategoryTotal + item.price);
-                    
-                    contentInfo += `<tr data-id="${item.id}">
-                    <td>${item.id}</td>
+            uniqueItems.forEach((item, id) => {
+                contentInfo += `<tr data-id="${id}">
+                    <td>${id}</td>
                     <td>${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</td>
                     <td>${item.price.toFixed(2)}€</td>
                     <td>${categoriesDictionary.get(item.categoryId).toUpperCase()}</td>
-                    <td>${itemQuantities.get(item.id)}</td>
+                    <td>${itemQuantities.get(id)}</td>
                     </tr>`;
-                });
             });
 
-            contentInfo += `<tr><td>TOTAL:</td><td></td><td>${totalPrice.toFixed(2)}€</td></tr></tbody></table><br><br><br>
+            contentInfo += `<tr><td>TOTAL:</td><td></td><td>${totalPrice.toFixed(2)}€</td><td></td><td></td></tr></tbody></table><br><br><br>
             <table id="itemsTable" class="centered-table">
                 <thead>
                     <tr>
@@ -88,15 +104,18 @@ else{
                 </thead>
                 <tbody>
             `;
+
+            // Agregar los totales por categoría a la tabla
             categoryPriceMap.forEach((value, key) => {
                 contentInfo += `<tr>
                 <td>${categoriesDictionary.get(key).toUpperCase()}</td>
                 <td>${value.toFixed(2)}€</td>
                 </tr>`;
-            })
-            contentInfo +=`</tbody></table>`
+            });
 
+            contentInfo += `</tbody></table>`;
 
+            // Renderizar el contenido en el contenedor
             tradeContent.innerHTML = contentInfo;
         })
         .catch(error => {
@@ -104,9 +123,9 @@ else{
         });
 }
 
-
-fetchGetUrl('https://localhost:8444/kiosco/category/').then(categories => {
+// Cargar categorías y construir el diccionario
+fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
     categories.forEach(element => {
-      categoriesDictionary.set(element.id, element.name); 
+        categoriesDictionary.set(element.id, element.name); 
     });
-  });
+});
