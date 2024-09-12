@@ -123,6 +123,39 @@ function displayTrades() {
         });
 }
 
+function downloadReport(){
+    // URL de la API que devuelve el archivo
+const apiUrl = 'https://zombiesurvive.ddns.net:8444/kiosco/generate-report';
+
+fetch(apiUrl)
+    .then(response => {
+        // Verificar si la respuesta fue exitosa
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.blob(); // Convertir la respuesta a un Blob
+    })
+    .then(blob => {
+        // Crear una URL para el Blob
+        const url = URL.createObjectURL(blob);
+
+        // Crear un enlace para descargar el archivo
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte_trades.xlsx'; // Nombre del archivo descargado
+        document.body.appendChild(a); // Necesario para Firefox
+        a.click(); // Simular el clic en el enlace para iniciar la descarga
+
+        // Limpiar
+        a.remove(); // Eliminar el enlace del DOM
+        URL.revokeObjectURL(url); // Liberar la URL del Blob
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+}
+
 // Cargar categorías y construir el diccionario
 fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
     categories.forEach(element => {

@@ -8,7 +8,6 @@ let categoriesDictionary = new Map();
 const sendButton = document.getElementById('sendButton');
 let returnButton = document.getElementById('returnButton');
 const audio = new Audio('../sounds/success_sound.mp3');
-
 function playSuccessSound() {
   audio.play();
 }
@@ -179,6 +178,9 @@ function sendTrade() {
     alert("No hay productos añadidos");
     return;
   }
+  
+  sendButton.disabled = true;
+
   fetch('https://zombiesurvive.ddns.net:8444/kiosco/trade/newTrade', {
     method: 'POST',
     headers: {
@@ -199,11 +201,15 @@ function sendTrade() {
       displayItems(actualItems, barcodeZone);
       playSuccessSound();
     })
-    .catch((error) => {
+    .catch(error => {
       console.error('Error:', error);
       alert('Ocurrió un error al enviar la solicitud. Ver consola para más detalles.');
+    })
+    .finally(() => {
+      sendButton.disabled = false; // Asegúrate de que el botón se habilite al final
     });
 }
+
 
 document.addEventListener('keypress', async e => {
   if (e.keyCode === 13) {

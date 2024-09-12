@@ -139,7 +139,7 @@ input[type="datetime-local"]::-webkit-scrollbar-thumb:hover {
     margin-right: 3px;
 }
 
-#sendButton {
+#sendButton, #downloadButton {
     position: absolute;
     top: 100px;
     right: 46%;
@@ -153,12 +153,16 @@ input[type="datetime-local"]::-webkit-scrollbar-thumb:hover {
     font-size: 1rem;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+#downloadButton{
+    top: 90%;
+    right: 10%;
 
-#sendButton:hover {
+}
+#sendButton:hover,#downloadButton {
     background-color: rgba(33, 136, 56, 1);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
-#sendButton:active {
+#sendButton:active,#downloadButton {
     transform: scale(0.95); /* Slightly shrink the button when pressed */
 }
 
