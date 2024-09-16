@@ -212,3 +212,41 @@ th {
     position: relative; /* Necesario para la flecha de ordenación */
     user-select: none; /* Evita la selección de texto */
 }
+
+/* Estilo para el menú desplegable */
+.nav-item.dropdown {
+    position: relative;
+}
+
+.nav-item .dropdown-menu {
+    display: none;
+    position: absolute;
+    color: white;
+    top: 100%;
+    left: 0;
+    background-color: #000000;
+    border: 1px solid #000000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1000; /* Asegúrate de que el menú esté encima de otros elementos */
+}
+
+.nav-item .dropdown-menu .dropdown-item {
+    padding: 8px 16px;
+    color: white;
+}
+
+.nav-item .dropdown-menu .dropdown-item a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-item .dropdown-menu .dropdown-item a:hover {
+    background-color: #383838;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
