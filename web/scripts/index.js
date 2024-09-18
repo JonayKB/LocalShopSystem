@@ -233,7 +233,7 @@ document.addEventListener('keypress', async e => {
     setTimeout(() => {
       code = "";
       reading = false;
-    }, 100); 
+    }, 300); 
   }
 });
 sendButton.onclick = sendTrade;

@@ -156,7 +156,7 @@ input[type="datetime-local"]::-webkit-scrollbar-thumb:hover {
 #downloadButton{
     top: 90%;
     right: 10%;
-
+    position: fixed;
 }
 #sendButton:hover,#downloadButton {
     background-color: rgba(33, 136, 56, 1);
