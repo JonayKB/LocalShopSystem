@@ -5,45 +5,42 @@
 
 </div>
 
-**LocalShopSystem** es una aplicación de gestión de compras para mercados, diseñada para funcionar como un sistema de cajas registradoras. Este proyecto ha sido desarrollado en **Java** utilizando un conjunto de tecnologías modernas como **Hibernate**, **Spring Boot**, **Spring Data** y **Tomcat** para el despliegue. La interfaz web ha sido creada con **JavaScript**, y la base de datos se gestiona con **MySQL**.
+**LocalShopSystem** is a shopping management application for markets, designed to function as a cash register system. This project has been developed in **Java** using a set of modern technologies such as **Hibernate**, **Spring Boot**, **Spring Data**, and **Tomcat** for deployment. The web interface has been created using **JavaScript**, and the database is managed with **MySQL**.
 
-## 🛠 Tecnologías Utilizadas
+## 🛠 Technologies Used
 
-- **Java**: Lenguaje de programación principal.
-- **Spring Boot**: Framework para simplificar el desarrollo de aplicaciones Java.
-- **Spring Data**: Facilita el acceso a los datos mediante la implementación del patrón Repository.
-- **Hibernate**: Framework de mapeo objeto-relacional (ORM) para interactuar con la base de datos.
-- **Tomcat**: Servidor web para el despliegue de la aplicación.
-- **JavaScript (JS)**: Utilizado para la creación de la página web y la interacción del usuario.
-- **MySQL**: Sistema de gestión de bases de datos relacional.
+- **Java**: Main programming language.
+- **Spring Boot**: Framework to simplify Java application development.
+- **Spring Data**: Facilitates data access through the Repository pattern.
+- **Hibernate**: Object-relational mapping (ORM) framework to interact with the database.
+- **Tomcat**: Web server for application deployment.
+- **JavaScript (JS)**: Used to create the webpage and user interactions.
+- **MySQL**: Relational database management system.
 
+## 🚀 Deployment
 
-## 🚀 Despliegue
+To deploy the project, make sure to have a suitable environment with **Java**, **Maven**, **MySQL**, and **Tomcat** configured.
 
-Para desplegar el proyecto, asegúrate de contar con un entorno adecuado con **Java**, **Maven**, **MySQL** y **Tomcat** configurados.
+## 📊 Features
 
-## 📊 Funcionalidades
+- **Product Management**: Add, edit, and delete products.
+- **Sales Registration**: Sales registration with automatic total calculations.
+- **Reports**: Generate sales reports.
 
-- **Gestión de Productos**: Añadir, editar y eliminar productos.
-- **Registro de Ventas**: Registro de ventas con cálculo automático de totales.
-- **Reportes**: Generación de reportes de ventas.
+## 🌐 Web Interface
 
-## 🌐 Interfaz Web
+The web interface has been developed using **JavaScript**, providing a fast and user-friendly experience. Transactions are recorded in real-time, offering instant feedback to users.
 
+## 📄 Data Model
 
-La interfaz web ha sido desarrollada con **JavaScript** y permite una experiencia de usuario amigable y rápida. Las transacciones se registran en tiempo real, proporcionando feedback instantáneo a los usuarios.
+The MySQL database is composed of the following main tables:
 
-## 📄 Modelo de Datos
+- **Products**: Information about the products available in the market.
+- **Sales**: Records of sales transactions.
 
-La base de datos MySQL se compone de las siguientes tablas principales:
+## 📁 Project Structure
 
-- **Productos**: Información sobre los productos disponibles en el mercado.
-- **Ventas**: Registros de las transacciones de ventas.
-
-
-## 📁 Estructura del Proyecto
-
-El proyecto sigue una arquitectura de **Modelo-Servicio-Controlador (MVC)**:
+The project follows a **Model-Service-Controller (MVC)** architecture:
 
 ```shell
 /src
@@ -54,26 +51,26 @@ El proyecto sigue una arquitectura de **Modelo-Servicio-Controlador (MVC)**:
      └── kb
       └── shopsystem
        ├── api
-        │ ├── config # Configuración de la API
-        │ ├── dto # Objetos de transferencia de datos
-        │ └── mappers # Mapeadores de datos
-        ├── controller # Controladores de la aplicación
+        │ ├── config # API configuration
+        │ ├── dto # Data Transfer Objects
+        │ └── mappers # Data Mappers
+        ├── controller # Application Controllers
         ├── model 
-        │ ├── entities # Entidades del modelo de datos
-        │ └── repository # Repositorios para el acceso a datos
+        │ ├── entities # Data Model Entities
+        │ └── repository # Data Access Repositories
         └── services 
-          ├── CategoryService.java # Servicio para categorías 
-          ├── ItemService.java # Servicio para ítems 
-          ├── TradeService.java # Servicio para transacciones 
-          ├── ServletInitializer.java # Inicializador del Servlet 
-          └── ShopsystemApplication.java # Clase principal de la aplicación
+          ├── CategoryService.java # Service for categories 
+          ├── ItemService.java # Service for items 
+          ├── TradeService.java # Service for transactions 
+          ├── ServletInitializer.java # Servlet Initializer 
+          └── ShopsystemApplication.java # Main application class
 ```
 
-## 📧 Contacto
+## 📧 Contact
 
-Para cualquier consulta o sugerencia, puedes contactar a los desarrolladores en:
+For any inquiries or suggestions, feel free to reach out to the developers at:
 
-- **Correo**: jonaykb@gmail.com
+- **Email**: jonaykb@gmail.com
 - **GitHub**: [JonayKB](https://github.com/jonaykb)
 
 ---
