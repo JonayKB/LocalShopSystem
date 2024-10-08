@@ -38,7 +38,7 @@ function selectorInitiator(){
   let content = '';
   categoriesDictionary.forEach((value, key) => {
     content += `<div id="category${key}" class="category-item" data-id="${key}">
-                  <img src="../images/categories/${key}.png" data-id="${key}"  />
+                  <img src="images/categories/${key}.png" data-id="${key}"  />
                  <h3 data-id="${key}" >${value.charAt(0).toUpperCase() + value.slice(1)}</h3>
                 </div>`;
   });
@@ -57,7 +57,7 @@ function loadCategoryContent(categoryId) {
       let content = '';
       objects.forEach(item => {
         content += `<div class="object-item" data-id="${item.id}">
-          <img src="../images/items/${item.id}.png" alt="${item.name}" data-id="${item.id}" />
+          <img src="images/items/${item.id}.png" alt="${item.name}" data-id="${item.id}" />
           <h3 data-id="${item.id}">${item.name.charAt(0).toUpperCase() + item.name.slice(1)}</h3>
         </div>`;
       });
