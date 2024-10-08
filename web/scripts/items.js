@@ -88,7 +88,7 @@ function reloadItems() {
             </tr>
         </thead>
         <tbody>`;
-    fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/item/')
+    fetchGetUrl('https://localhost:8444/kiosco/item/')
         .then(items => {
             items.forEach(item => {
                 itemsHtml += `<tr data-id="${item.id}">
@@ -112,7 +112,7 @@ function reloadItems() {
 }
 
 
-fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
+fetchGetUrl('https://localhost:8444/kiosco/category/').then(categories => {
     categories.forEach(element => {
       categoriesDictionary.set(element.id, element.name); 
     });
@@ -125,7 +125,7 @@ fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categor
   reloadItems();
 
   async function deleteItem(itemId) {
-    const url = `https://zombiesurvive.ddns.net:8444/kiosco/item/${itemId}`;
+    const url = `https://localhost:8444/kiosco/item/${itemId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
@@ -192,7 +192,7 @@ async function completeUpdate(itemId) {
     }
 
     try {
-        const response = await fetch(`https://zombiesurvive.ddns.net:8444/kiosco/item/`, {
+        const response = await fetch(`https://localhost:8444/kiosco/item/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -243,7 +243,7 @@ function hideCreateItem() {
 
 function postNewItem() {
     // Devuelve la promesa del fetch para manejar la respuesta en createItem
-    return fetch('https://zombiesurvive.ddns.net:8444/kiosco/item/', {
+    return fetch('https://localhost:8444/kiosco/item/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -280,7 +280,7 @@ async function createItem() {
 
     // Verifica si el item ya existe
     try {
-        const existingItem = await fetchGetUrl(`https://zombiesurvive.ddns.net:8444/kiosco/item/${idContainer.value}`);
+        const existingItem = await fetchGetUrl(`https://localhost:8444/kiosco/item/${idContainer.value}`);
         if (existingItem != null) {
             alert('El código ya existe');
             return;

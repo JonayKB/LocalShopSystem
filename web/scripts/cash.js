@@ -40,7 +40,7 @@ function displayTrades() {
     }
 
     // Construye la URL con los parámetros de fecha
-    let url = `https://zombiesurvive.ddns.net:8444/kiosco/trade/range?startDate=${encodeURIComponent(startDate.toISOString())}&endDate=${encodeURIComponent(endDate.toISOString())}`;
+    let url = `https://localhost:8444/kiosco/trade/range?startDate=${encodeURIComponent(startDate.toISOString())}&endDate=${encodeURIComponent(endDate.toISOString())}`;
 
     // Realiza la solicitud fetch
     fetch(url)
@@ -125,7 +125,7 @@ function displayTrades() {
 
 function downloadReport(){
     // URL de la API que devuelve el archivo
-const apiUrl = 'https://zombiesurvive.ddns.net:8444/kiosco/generate-report';
+const apiUrl = 'https://localhost:8444/kiosco/generate-report';
 
 fetch(apiUrl)
     .then(response => {
@@ -157,7 +157,7 @@ fetch(apiUrl)
 }
 
 // Cargar categorías y construir el diccionario
-fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
+fetchGetUrl('https://localhost:8444/kiosco/category/').then(categories => {
     categories.forEach(element => {
         categoriesDictionary.set(element.id, element.name); 
     });

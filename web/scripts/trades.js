@@ -25,7 +25,7 @@ function reloadItems() {
         </thead>
         <tbody>`;
 
-    fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/trade/')
+    fetchGetUrl('https://localhost:8444/kiosco/trade/')
         .then(items => {
             items.reverse();
             items.forEach(item => {
@@ -56,7 +56,7 @@ function reloadItems() {
 
                     if (accordionContent.innerHTML === 'Cargando detalles...') {
                         let tradeId = this.getAttribute('data-id');
-                        fetchGetUrl(`https://zombiesurvive.ddns.net:8444/kiosco/item/byTrade/${tradeId}`)
+                        fetchGetUrl(`https://localhost:8444/kiosco/item/byTrade/${tradeId}`)
                             .then(itemDetails => {
                                 let contentObject = `<table>
                                     <thead>
@@ -103,7 +103,7 @@ function reloadItems() {
 
 
 async function deleteItem(itemId) {
-    const url = `https://zombiesurvive.ddns.net:8444/kiosco/trade/${itemId}`;
+    const url = `https://localhost:8444/kiosco/trade/${itemId}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE'
@@ -130,7 +130,7 @@ async function deleteItem(itemId) {
 
 // Cargar los items al inicio
 reloadItems();
-fetchGetUrl('https://zombiesurvive.ddns.net:8444/kiosco/category/').then(categories => {
+fetchGetUrl('https://localhost:8444/kiosco/category/').then(categories => {
     categories.forEach(element => {
       categoriesDictionary.set(element.id, element.name); 
     });

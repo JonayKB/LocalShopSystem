@@ -25,32 +25,29 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Locale.Category;
-import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 public class TradeReportService {
-TradeController tradeController;
-CategoryController categoryController;
-private static final Logger logger = LoggerFactory.getLogger(TradeReportService.class);
+    TradeController tradeController;
+    CategoryController categoryController;
+    private static final Logger logger = LoggerFactory.getLogger(TradeReportService.class);
 
-public TradeController getTradeController() {
-    return this.tradeController;
-}
+    public TradeController getTradeController() {
+        return this.tradeController;
+    }
 
-@Autowired
-public void setTradeController(TradeController tradeController) {
-    this.tradeController = tradeController;
-}
-
+    @Autowired
+    public void setTradeController(TradeController tradeController) {
+        this.tradeController = tradeController;
+    }
 
     public CategoryController getCategoryController() {
         return this.categoryController;
     }
+
     @Autowired
     public void setCategoryController(CategoryController categoryController) {
         this.categoryController = categoryController;
@@ -61,8 +58,8 @@ public void setTradeController(TradeController tradeController) {
         // Obtener datos de la API o de la base de datos
         List<TradeDto> trades = fetchTradesFromDatabase();
 
-        // Organizar datos por fecha
-        Map<String, Map<String, Double>> dataByDate = organizeDataByDate(trades);
+        // Organizar datos por fecha (utilizando LocalDate en lugar de String para un orden correcto)
+        Map<LocalDate, Map<String, Double>> dataByDate = organizeDataByDate(trades);
 
         // Crear archivo Excel
         Workbook workbook = new XSSFWorkbook();
@@ -72,7 +69,7 @@ public void setTradeController(TradeController tradeController) {
         Row headerRow = sheet.createRow(0);
         headerRow.createCell(0).setCellValue("Fecha");
         int columnIndex = 1;
-        
+
         // Crear columnas de encabezado de categoría dinámicamente
         List<String> categoryNames = fetchCategoryNames();
         for (String category : categoryNames) {
@@ -82,14 +79,19 @@ public void setTradeController(TradeController tradeController) {
 
         // Crear filas de datos
         int rowIndex = 1;
-        for (Map.Entry<String, Map<String, Double>> entry : dataByDate.entrySet()) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        for (Map.Entry<LocalDate, Map<String, Double>> entry : dataByDate.entrySet()) {
             Row row = sheet.createRow(rowIndex++);
-            row.createCell(0).setCellValue(entry.getKey()); // Fecha
-            
+
+            // Convertir LocalDate a String usando un formato adecuado
+            String formattedDate = entry.getKey().format(dateFormatter);
+            row.createCell(0).setCellValue(formattedDate); // Fecha
+
             Map<String, Double> categoryData = entry.getValue();
             columnIndex = 1;
             double total = 0.0;
-            
+
             for (String category : categoryNames) {
                 double amount = categoryData.getOrDefault(category, 0.0);
                 row.createCell(columnIndex++).setCellValue(amount);
@@ -131,24 +133,27 @@ public void setTradeController(TradeController tradeController) {
         return tradeController.findTradesInRange(startOfMonth, endOfMonth);
     }
 
-    private Map<String, Map<String, Double>> organizeDataByDate(List<TradeDto> trades) {
-        Map<String, Map<String, Double>> dataByDate = new HashMap<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private Map<LocalDate, Map<String, Double>> organizeDataByDate(List<TradeDto> trades) {
+        Map<LocalDate, Map<String, Double>> dataByDate = new TreeMap<>(); // TreeMap para ordenar por fecha automáticamente
+
         for (TradeDto trade : trades) {
-            String date = sdf.format(trade.getDate());
+            // Convertir la fecha a LocalDate para asegurar el orden
+            LocalDate date = trade.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
             dataByDate.putIfAbsent(date, new HashMap<>());
             Map<String, Double> categoryData = dataByDate.get(date);
-            
+
             for (ItemDto item : trade.getItems()) {
                 categoryData.merge(fetchCategoryNames().get(Integer.parseInt(item.getCategoryId().toString())), item.getPrice(), Double::sum);
             }
         }
+
         logger.info(dataByDate.toString());
         return dataByDate;
     }
-    
+
     private List<String> fetchCategoryNames() {
-        List<String> categoryNames = new ArrayList();
+        List<String> categoryNames = new ArrayList<>();
         for (CategoryDto categoryDto : categoryController.findAll()) {
             categoryNames.add(categoryDto.getName());
         }
